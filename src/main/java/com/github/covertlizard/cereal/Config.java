@@ -2,6 +2,7 @@ package com.github.covertlizard.cereal;
 
 import org.apache.commons.lang3.Validate;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -110,6 +111,36 @@ public class Config extends YamlConfiguration
         {
 
         }
+    }
+
+    /**
+     * Sets the object at the specified path
+     * @param path the path to set the object
+     * @param object the object to set
+     */
+    public void set(String path, Object object)
+    {
+        super.set(path, object);
+    }
+
+    /**
+     * Serializes a ConfigurationSerializable at the specified path
+     * @param path the path to serialize the object to
+     * @param serializable the class to serialize
+     */
+    public void set(String path, ConfigurationSerializable serializable)
+    {
+        super.set(path, serializable.serialize());
+    }
+
+    /**
+     * Gathers a configuration object from the specified path
+     * @param path the path
+     * @return the configuration object
+     */
+    public ConfigObject get(String path)
+    {
+        return new ConfigObject(super.get(path));
     }
 
     public String getHeader()
