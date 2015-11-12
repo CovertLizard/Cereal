@@ -117,20 +117,28 @@ public class Config extends YamlConfiguration
      * Sets the object at the specified path
      * @param path the path to set the object
      * @param object the object to set
+     * @param save whether or not to save and load after setting value
      */
-    public void set(String path, Object object)
+    public void set(String path, Object object, boolean... save)
     {
         super.set(path, object);
+        if(save.length != 0 && !save[0]) return;
+        this.save();
+        this.load();
     }
 
     /**
      * Serializes a ConfigurationSerializable at the specified path
      * @param path the path to serialize the object to
      * @param serializable the class to serialize
+     * @param save whether or not to save and load after setting value
      */
-    public void set(String path, ConfigurationSerializable serializable)
+    public void set(String path, ConfigurationSerializable serializable, boolean... save)
     {
         super.set(path, serializable.serialize());
+        if(save.length != 0 && !save[0]) return;
+        this.save();
+        this.load();
     }
 
     /**
