@@ -16,8 +16,8 @@ import java.util.Map;
 @SuppressWarnings("all")
 public class Cereal implements ConfigurationSerializable
 {
-    private final Map<String, Object> serialize = new LinkedHashMap<>();
-    private final String alias;
+    protected final Map<String, Object> serialize = new LinkedHashMap<>();
+    protected final String alias;
 
     /**
      * Implements ConfigurationSerializable and provides utility methods for serialization
