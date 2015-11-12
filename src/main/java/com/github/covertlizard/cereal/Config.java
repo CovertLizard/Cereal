@@ -85,7 +85,7 @@ public class Config extends YamlConfiguration
         {
             if(!this.file.exists())
             {
-                this.file.mkdirs();
+                this.file.getParentFile().mkdirs();
                 this.file.createNewFile();
             }
             Validate.isTrue(this.file.exists(), "The configuration file could not be saved.");
