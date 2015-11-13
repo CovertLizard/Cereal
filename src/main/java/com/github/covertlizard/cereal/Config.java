@@ -1,6 +1,6 @@
 package com.github.covertlizard.cereal;
 
-import org.apache.commons.lang3.Validate;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -33,7 +33,6 @@ public class Config extends YamlConfiguration
     {
         this.file = file;
         this.header = header == null ? "" : header;
-        this.save();
         this.load();
         super.addDefaults(defaults == null ? new HashMap<String, Object>() : defaults);
         super.options().copyDefaults(defaults != null);
@@ -88,7 +87,6 @@ public class Config extends YamlConfiguration
                 this.file.getParentFile().mkdirs();
                 this.file.createNewFile();
             }
-            Validate.isTrue(this.file.exists(), "The configuration file could not be saved.");
             super.save(this.file);
         }
         catch (IOException ignored)
@@ -102,14 +100,13 @@ public class Config extends YamlConfiguration
      */
     public void load()
     {
-        Validate.isTrue(this.file.exists(), "The configuration file could not be loaded.");
         try
         {
             super.load(this.file);
         }
-        catch (Exception ignored)
+        catch (InvalidConfigurationException | IOException exception)
         {
-
+            exception.printStackTrace();
         }
     }
 

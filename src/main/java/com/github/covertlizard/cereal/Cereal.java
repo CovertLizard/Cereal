@@ -17,25 +17,6 @@ import java.util.Map;
 public class Cereal implements ConfigurationSerializable
 {
     protected final Map<String, Object> serialize = new LinkedHashMap<>();
-    protected final String alias;
-
-    /**
-     * Implements ConfigurationSerializable and provides utility methods for serialization
-     * @param alias the alias of your class to be used during serialization
-     */
-    protected Cereal(String alias)
-    {
-        this.alias = alias.isEmpty() ? this.getClass().getSimpleName() : alias;
-        ConfigurationSerialization.registerClass(this.getClass(), this.alias);
-    }
-
-    /**
-     * Implements ConfigurationSerializable and provides utility methods for serialization
-     */
-    protected Cereal()
-    {
-        this("");
-    }
 
     @Override
     public Map<String, Object> serialize()
@@ -43,8 +24,22 @@ public class Cereal implements ConfigurationSerializable
         return this.serialize;
     }
 
-    public String getAlias()
+    /**
+     * Registers custom classes so they can be deserialized
+     * @param classes the clases to register
+     */
+    public static void register(Class<? extends ConfigurationSerializable>... classes)
     {
-        return this.alias;
+        for(Class<? extends ConfigurationSerializable> clazz : classes) Cereal.register(clazz, clazz.getSimpleName());
+    }
+
+    /**
+     * Registers the custom class to be deserialized
+     * @param clazz the ConfigurationSerializable class
+     * @param alias the alias to use when saving to a configuration file
+     */
+    public static void register(Class<? extends ConfigurationSerializable> clazz, String alias)
+    {
+        ConfigurationSerialization.registerClass(clazz, alias);
     }
 }
