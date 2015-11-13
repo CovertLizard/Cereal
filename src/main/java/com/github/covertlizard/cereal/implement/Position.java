@@ -17,12 +17,12 @@ import java.util.UUID;
 @SuppressWarnings("all")
 public class Position extends Cereal
 {
-    private transient String world;
-    private transient double x;
-    private transient double y;
-    private transient double z;
-    private transient float pitch;
-    private transient float yaw;
+    public transient String world;
+    public transient double x;
+    public transient double y;
+    public transient double z;
+    public transient float pitch;
+    public transient float yaw;
 
     public Position(Location location)
     {
@@ -44,7 +44,7 @@ public class Position extends Cereal
      * Converts position to location
      * @return the location
      */
-    public Location get()
+    public Location convert()
     {
         return new Location(Bukkit.getServer().getWorld(UUID.fromString(this.world)), this.x, this.y, this.z, this.pitch, this.yaw);
     }
