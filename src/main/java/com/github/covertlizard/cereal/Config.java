@@ -33,6 +33,7 @@ public class Config extends YamlConfiguration
     {
         this.file = file;
         this.header = header == null ? "" : header;
+        if(!this.file.exists()) this.save();
         this.load();
         super.addDefaults(defaults == null ? new HashMap<String, Object>() : defaults);
         super.options().copyDefaults(defaults != null);
@@ -49,7 +50,7 @@ public class Config extends YamlConfiguration
      */
     public Config(JavaPlugin plugin, String directory, String name, String header, Map<String, Object> defaults)
     {
-        this(new File(plugin.getDataFolder().getPath() + File.separator + directory + File.separator + name + ".yml"), header, defaults);
+        this(new File(plugin.getDataFolder().getPath() + File.separator + directory, name.endsWith(".yml") ? name : name + ".yml"), header, defaults);
     }
 
     /**
@@ -82,16 +83,11 @@ public class Config extends YamlConfiguration
     {
         try
         {
-            if(!this.file.exists())
-            {
-                this.file.getParentFile().mkdirs();
-                this.file.createNewFile();
-            }
             super.save(this.file);
         }
-        catch (IOException ignored)
+        catch (IOException exception)
         {
-
+            exception.printStackTrace();
         }
     }
 
