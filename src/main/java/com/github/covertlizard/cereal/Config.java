@@ -7,6 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,12 +29,14 @@ public class Config extends YamlConfiguration
      * @param file the configuration file
      * @param header the header of the configuration file
      * @param defaults the default values for the configuration file
+     * @param sections the sections to be created
      */
-    public Config(File file, String header, Map<String, Object> defaults)
+    public Config(File file, String header, Map<String, Object> defaults, String... sections)
     {
         this.file = file;
         this.header = header == null ? "" : header;
         if(!this.file.exists()) this.save();
+        Arrays.asList(sections).forEach(string -> {if(!super.contains(string)) super.createSection(string); this.save();});
         this.load();
         super.addDefaults(defaults == null ? new HashMap<String, Object>() : defaults);
         super.options().copyDefaults(defaults != null);
