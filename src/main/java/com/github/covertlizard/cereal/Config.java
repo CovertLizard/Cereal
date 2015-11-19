@@ -31,12 +31,11 @@ public class Config extends YamlConfiguration
      * @param defaults the default values for the configuration file
      * @param sections the sections to be created
      */
-    public Config(File file, String header, Map<String, Object> defaults, List<String> sections)
+    public Config(File file, String header, Map<String, Object> defaults)
     {
         this.file = file;
         this.header = header == null ? "" : header;
         if(!this.file.exists()) this.save();
-        sections.forEach(string -> {if(!super.contains(string)) super.createSection(string); this.save();});
         this.load();
         super.addDefaults(defaults == null ? new HashMap<String, Object>() : defaults);
         super.options().copyDefaults(defaults != null);
@@ -52,9 +51,9 @@ public class Config extends YamlConfiguration
      * @param defaults the default values for the configuration file
      * @param sections the sections to be created
      */
-    public Config(JavaPlugin plugin, String directory, String name, String header, Map<String, Object> defaults, List<String> sections)
+    public Config(JavaPlugin plugin, String directory, String name, String header, Map<String, Object> defaults)
     {
-        this(new File(plugin.getDataFolder().getPath() + File.separator + directory, name.endsWith(".yml") ? name : name + ".yml"), header, defaults, sections);
+        this(new File(plugin.getDataFolder().getPath() + File.separator + directory, name.endsWith(".yml") ? name : name + ".yml"), header, defaults);
     }
 
     /**
@@ -65,9 +64,9 @@ public class Config extends YamlConfiguration
      * @param header the header of the configuration file
      * @param sections the sections to be created
      */
-    public Config(JavaPlugin plugin, String directory, String name, String header, List<String> sections)
+    public Config(JavaPlugin plugin, String directory, String name, String header)
     {
-        this(plugin, directory, name, header, null, sections);
+        this(plugin, directory, name, header, null);
     }
 
     /**
@@ -77,9 +76,24 @@ public class Config extends YamlConfiguration
      * @param name the name of the configuration file
      * @param sections the sections to be created
      */
-    public Config(JavaPlugin plugin, String directory, String name, List<String> sections)
+    public Config(JavaPlugin plugin, String directory, String name)
     {
-        this(plugin, directory, name, null, sections);
+        this(plugin, directory, name, null);
+    }
+
+    /**
+     * Creates sections that are usually meant to be defaultly created
+     * @param sections the sections to create
+     */
+    public void createSections(String... sections)
+    {
+        for(String section : sections)
+        {
+            if(super.contains(section)) continue;
+            super.createSection(section);
+        }
+        this.save();
+        this.load();
     }
 
     /**
