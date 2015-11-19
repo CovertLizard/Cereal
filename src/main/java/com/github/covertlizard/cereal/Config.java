@@ -50,10 +50,11 @@ public class Config extends YamlConfiguration
      * @param name the name of the configuration file
      * @param header the header of the configuration file
      * @param defaults the default values for the configuration file
+     * @param sections the sections to be created
      */
-    public Config(JavaPlugin plugin, String directory, String name, String header, Map<String, Object> defaults)
+    public Config(JavaPlugin plugin, String directory, String name, String header, Map<String, Object> defaults, String... sections)
     {
-        this(new File(plugin.getDataFolder().getPath() + File.separator + directory, name.endsWith(".yml") ? name : name + ".yml"), header, defaults);
+        this(new File(plugin.getDataFolder().getPath() + File.separator + directory, name.endsWith(".yml") ? name : name + ".yml"), header, defaults, sections);
     }
 
     /**
@@ -62,10 +63,11 @@ public class Config extends YamlConfiguration
      * @param directory the directory to save the configuration file in
      * @param name the name of the configuration file
      * @param header the header of the configuration file
+     * @param sections the sections to be created
      */
-    public Config(JavaPlugin plugin, String directory, String name, String header)
+    public Config(JavaPlugin plugin, String directory, String name, String header, String... sections)
     {
-        this(plugin, directory, name, header, null);
+        this(plugin, directory, name, header, null, sections);
     }
 
     /**
@@ -73,10 +75,11 @@ public class Config extends YamlConfiguration
      * @param plugin the plugin
      * @param directory the directory to save the configuration file in
      * @param name the name of the configuration file
+     * @param sections the sections to be created
      */
-    public Config(JavaPlugin plugin, String directory, String name)
+    public Config(JavaPlugin plugin, String directory, String name, String... sections)
     {
-        this(plugin, directory, name, null);
+        this(plugin, directory, name, null, sections);
     }
 
     /**
