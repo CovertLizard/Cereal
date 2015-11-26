@@ -19,6 +19,7 @@ import java.util.UUID;
 public class CLocation extends Cereal
 {
     private transient final UUID world;
+    private transient final String worldName;
     private transient final double x;
     private transient final double y;
     private transient final double z;
@@ -34,12 +35,14 @@ public class CLocation extends Cereal
     public CLocation(Location location)
     {
         this.world = location.getWorld().getUID();
+        this.worldName = location.getWorld().getName();
         this.x = location.getX();
         this.y = location.getY();
         this.z = location.getZ();
         this.pitch = location.getPitch();
         this.yaw = location.getYaw();
         super.put("world", this.world.toString());
+        super.put("worldName", this.worldName);
         super.put("x", this.x);
         super.put("y", this.y);
         super.put("z", this.z);
@@ -54,6 +57,7 @@ public class CLocation extends Cereal
     public CLocation(Map<String, Object> serialize)
     {
         this.world = UUID.fromString((String)serialize.get("world"));
+        this.worldName = (String) serialize.get("worldName");
         this.x = (double) serialize.get("x");
         this.y = (double) serialize.get("y");
         this.z = (double) serialize.get("z");
