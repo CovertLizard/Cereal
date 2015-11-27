@@ -8,7 +8,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -83,11 +82,14 @@ public class Config extends YamlConfiguration
      */
     public void createSections(String... sections)
     {
+        boolean change = false;
         for(String section : sections)
         {
             if(super.contains(section)) continue;
             super.createSection(section);
+            change = true;
         }
+        if(!change) return;
         this.save();
         this.load();
     }

@@ -6,7 +6,6 @@ import org.bukkit.Location;
 
 import java.lang.ref.WeakReference;
 import java.util.Map;
-import java.util.UUID;
 
 /**
  * Project: Cereal
@@ -18,7 +17,7 @@ import java.util.UUID;
 @SuppressWarnings("all")
 public class CLocation extends Cereal
 {
-    private transient final UUID world;
+    private transient final String world;
     private transient final double x;
     private transient final double y;
     private transient final double z;
@@ -33,7 +32,7 @@ public class CLocation extends Cereal
      */
     public CLocation(Location location)
     {
-        this.world = location.getWorld().getUID();
+        this.world = location.getWorld().getName();
         this.x = location.getX();
         this.y = location.getY();
         this.z = location.getZ();
@@ -53,12 +52,42 @@ public class CLocation extends Cereal
      */
     public CLocation(Map<String, Object> serialize)
     {
-        this.world = UUID.fromString((String)serialize.get("world"));
-        this.x = (double) serialize.get("x");
-        this.y = (double) serialize.get("y");
-        this.z = (double) serialize.get("z");
-        this.pitch = (float) ((double) serialize.get("pitch"));
-        this.yaw = (float) ((double) serialize.get("yaw"));
+        this.world = serialize == null || serialize.isEmpty() ?  "" : (String) serialize.get("world");
+        this.x = serialize == null || serialize.isEmpty() ?  0 : (double) serialize.get("x");
+        this.y = serialize == null || serialize.isEmpty() ?  0 : (double) serialize.get("y");
+        this.z = serialize == null || serialize.isEmpty() ?  0 : (double) serialize.get("z");
+        this.pitch = serialize == null || serialize.isEmpty() ?  0 : (float) ((double) serialize.get("pitch"));
+        this.yaw = serialize == null || serialize.isEmpty() ?  0 : (float) ((double) serialize.get("yaw"));
+    }
+
+    public String getWorld()
+    {
+        return this.world;
+    }
+
+    public double getX()
+    {
+        return this.x;
+    }
+
+    public double getY()
+    {
+        return this.y;
+    }
+
+    public double getZ()
+    {
+        return this.z;
+    }
+
+    public float getPitch()
+    {
+        return this.pitch;
+    }
+
+    public float getYaw()
+    {
+        return this.yaw;
     }
 
     /**
