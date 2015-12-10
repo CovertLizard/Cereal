@@ -1,6 +1,6 @@
 # Cereal
 Spigot library designed for serializing objects.
-<h2 style="text-align:center;">Maven</h2>
+<h2>Maven</h2>
 ```
  <dependency>
     <groupId>com.github.covertlizard</groupId>
